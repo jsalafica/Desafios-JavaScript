@@ -1,7 +1,7 @@
 let cantidadCamas = 0;
 let noEsNumero = true;
 do {
-    cantidadCamas = prompt('Ingrese la cantidad de camas disponibles: ');
+    cantidadCamas = prompt('Ingrese la cantidad de camas disponibles');
     if(!isNaN(cantidadCamas)){
         noEsNumero = false;
     }
@@ -18,7 +18,7 @@ do {
         break;
     }
     sala = prompt('Ingrese la sala: (ej: sala 1)');
-    cama = prompt('Ingrese el numero de la cama: ');
+    cama = prompt('Ingrese el número de la cama');
     document.write(`El paciente ${paciente} se internó en ${sala} cama ${cama} <br>`);
     console.log(`El paciente ${paciente} se internó en ${sala} cama ${cama}`);
     camaOcupada++;
@@ -28,12 +28,17 @@ do {
         break;
     }
 } while (paciente!='FIN');
-if(camaOcupada==1){
+if (camaOcupada==1){
     document.write(`Se ocupó ${camaOcupada} cama <br>`);
     console.log(`Se ocupó ${camaOcupada} cama`);
 } else {
     document.write(`Se ocuparon ${camaOcupada} camas <br>`);
     console.log(`Se ocuparon ${camaOcupada} camas`);
 }
-document.write(`La cantidad de camas libres es: ${cantidadCamas}`);
-console.log(`La cantidad de camas libres es: ${cantidadCamas}`);
+if (cantidadCamas==0) {
+    document.write('No hay camas libres');
+    console.log('No hay camas libres');
+} else {
+    document.write(`La cantidad de camas libres es: ${cantidadCamas}`);
+    console.log(`La cantidad de camas libres es: ${cantidadCamas}`);
+}

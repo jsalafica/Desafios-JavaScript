@@ -1,11 +1,14 @@
 let cantidadCamas = 0;
 let noEsNumero = true;
 let paciente = '';
+let edad = 0;
+let sumaEdad = 0;
 let sala = '';
 let cama = '';
 let camaOcupada = 0;
 
-//Función para calcular camas.
+//Funciones.
+const promedioEdad = (a,b) => a/b;
 const sumaCama = (a) => a+1;
 const restaCama = (a) => a-1;
 const camasLibres = (a,b) => a-b;
@@ -13,7 +16,7 @@ const porcentajeCamaLibre = (a,b) => (b*100)/a;
 
 //Verifica que se ingrese un numero
 do {
-    cantidadCamas = prompt('Ingrese la cantidad de camas disponibles');
+    cantidadCamas = parseInt(prompt('Ingrese la cantidad de camas disponibles'));
     if(!isNaN(cantidadCamas)){
         noEsNumero = false;
     }
@@ -28,12 +31,23 @@ do {
     if(paciente=="FIN"){
         break;
     }
+
+    //Verifica que se ingrese un numero
+    noEsNumero = true;
+    do {
+        edad = parseInt(prompt('Ingrese la edad (en años)'));
+        if(!isNaN(edad)){
+            noEsNumero = false;
+        }
+    } while (noEsNumero);
+    sumaEdad+=edad;
     sala = prompt('Ingrese la sala: (ej: sala 1)');
     cama = prompt('Ingrese el número de la cama');
-    document.write(`El paciente ${paciente} se internó en ${sala} cama ${cama} <br>`);
-    console.log(`El paciente ${paciente} se internó en ${sala} cama ${cama}`);
+    document.write(`El paciente ${paciente}, de ${edad} años de edad, se internó en ${sala} cama ${cama} <br>`);
+    console.log(`El paciente ${paciente}, de ${edad} años de edad, se internó en ${sala} cama ${cama}`);
     camaOcupada = sumaCama(camaOcupada);
     camaDisponible = restaCama(camaDisponible);
+    console.log(`Suma edad: ${sumaEdad}`);
     if(camaDisponible==0){
         alert('No hay mas camas libres');
         break;
@@ -58,11 +72,14 @@ if (camaDisponible==0) {
 
 let porcentajeCama = porcentajeCamaLibre(cantidadCamas,camaOcupada);
 let camasLibresFunc = camasLibres(cantidadCamas,camaOcupada);
+let edadPromedio = promedioEdad(sumaEdad,camaOcupada);
 
 //Imprime resultados de funciones
 document.write(`<br>La cantidad de camas libres calculada por función es: ${camasLibresFunc}`);
 document.write(`<br>La ocupación de camas es del: ${porcentajeCama.toFixed(2)}%`);
 document.write(`<br>El porcentaje de camas libres es del: ${100-porcentajeCama.toFixed(2)}%`);
+document.write(`<br>La edad promedio de los internados es de ${edadPromedio} años.`);
 console.log(`La cantidad de camas libres calculada por función es: ${camasLibresFunc}`);
 console.log(`La ocupación de camas es del: ${porcentajeCama.toFixed(2)}%`);
 console.log(`El porcentaje de camas libres es del: ${100-porcentajeCama.toFixed(2)}%`);
+console.log(`La edad promedio de los internados es de ${edadPromedio} años.`);

@@ -5,6 +5,7 @@ let edad = 0;
 let sumaEdad = 0;
 let sala = '';
 let cama = '';
+let diagnostico = '';
 let camaOcupada = 0;
 let pacientes = [];
 
@@ -28,23 +29,45 @@ console.log(`La cantidad de camas disponibles es: ${camaDisponible}`);
 
 //Clase paciente
 class Paciente {
-    constructor (nombre,edad,sala,cama){
+    constructor (nombre,edad,sala,cama,diagnostico){
         this.nombre = nombre,
         this.edad = edad,
         this.sala = sala,
-        this.cama = cama
+        this.cama = cama,
+        this.diagnostico = diagnostico
     }
     imprimir(){
-        document.write(`------------------------<br>`);
-        document.write(`Nombre: ${this.nombre}<br>`);
-        document.write(`Edad: ${this.edad} años<br>`);
-        document.write(`Sala: ${this.sala}<br>`);
-        document.write(`Cama: ${this.cama}<br>`);
+        // document.write(`------------------------<br>`);
+        // document.write(`Nombre: ${this.nombre}<br>`);
+        // document.write(`Edad: ${this.edad} años<br>`);
+        // document.write(`Sala: ${this.sala}<br>`);
+        // document.write(`Cama: ${this.cama}<br>`);
+        // document.write(`Diagnóstico: ${this.diagnostico}<br>`);
+
+        let tarjeta = document.getElementById('cardPaciente');
+        let card = document.createElement('div');
+        card.className = "card m-2";
+        card.innerHTML = `<div class="card-header">
+                            Paciente
+                            </div>
+                            <div class="card-body">
+                                <div class="card-title">
+                                    Nombre: ${this.nombre}
+                                </div>
+                                <div class="card-text">
+                                    Edad: ${this.edad} años<br>
+                                    Sala: ${this.sala}<br>
+                                    Cama: ${this.cama}<br>
+                                    Diagnóstico: ${this.diagnostico}
+                                </div>
+                            </div>`;
+        tarjeta.appendChild(card);
         
         console.log(`Nombre: ${this.nombre}`);
         console.log(`Edad: ${this.edad} años`);
         console.log(`Sala: ${this.sala}`);
         console.log(`Cama: ${this.cama}`);
+        console.log(`Diagnóstico: ${this.diagnostico}`);
     }
 }
 
@@ -64,16 +87,17 @@ do {
         }
     } while (noEsNumero);
     sumaEdad+=edad;
-    sala = prompt('Ingrese la sala: (ej: sala 1)');
+    sala = prompt('Ingrese la sala: (ej: 1, UTI, etc)');
     cama = prompt('Ingrese el número de la cama');
-    document.write(`El paciente ${nombre}, de ${edad} años de edad, se internó en ${sala} cama ${cama} <br>`);
-    console.log(`El paciente ${nombre}, de ${edad} años de edad, se internó en ${sala} cama ${cama}`);
+    diagnostico = prompt('Ingrese el diagnóstico');
+    document.write(`El paciente ${nombre}, de ${edad} años de edad, se internó en sala: ${sala} cama ${cama} con el diagnóstico de ${diagnostico}.<br>`);
+    console.log(`El paciente ${nombre}, de ${edad} años de edad, se internó en sala: ${sala} cama ${cama} con el diagnostico de ${diagnostico}.`);
     camaOcupada = sumaCama(camaOcupada);
     camaDisponible = restaCama(camaDisponible);
     console.log(`Suma edad: ${sumaEdad}`);
 
     //Agrego a array
-    pacientes.push(new Paciente(nombre,edad,sala,cama));
+    pacientes.push(new Paciente(nombre,edad,sala,cama,diagnostico));
 
     if(camaDisponible==0){
         alert('No hay mas camas libres');
@@ -83,10 +107,10 @@ do {
 
 //Imprime resultados en pantalla y consola
 if (camaOcupada==1){
-    document.write(`Se ocupó ${camaOcupada} cama <br>`);
+    document.write(`Se ocupó ${camaOcupada} cama<br>`);
     console.log(`Se ocupó ${camaOcupada} cama`);
 } else {
-    document.write(`Se ocuparon ${camaOcupada} camas <br>`);
+    document.write(`Se ocuparon ${camaOcupada} camas<br>`);
     console.log(`Se ocuparon ${camaOcupada} camas`);
 }
 if (camaDisponible==0) {
@@ -112,7 +136,7 @@ console.log(`El porcentaje de camas libres es del: ${100-porcentajeCama.toFixed(
 console.log(`La edad promedio de los internados es de ${edadPromedio.toFixed(2)} años.`);
 
 //Imprimo array
-document.write(`<br><br>**<ins>Lista de internados</ins>**<br>`);
+// document.write(`<br><br>**<ins>Lista de internados</ins>**<br>`);
 for(const paciente of pacientes){
     paciente.imprimir();
 }

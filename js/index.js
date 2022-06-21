@@ -1,4 +1,4 @@
-let cantidadCamas = 0;
+//let cantidadCamas = 0;
 let noEsNumero = true;
 let nombre = '';
 let edad = 0;
@@ -16,13 +16,37 @@ const restaCama = (a) => a-1;
 const camasLibres = (a,b) => a-b;
 const porcentajeCamaLibre = (a,b) => (b*100)/a;
 
-//Verifica que se ingrese un numero
-do {
-    cantidadCamas = parseInt(prompt('Ingrese la cantidad de camas disponibles'));
-    if(!isNaN(cantidadCamas)){
-        noEsNumero = false;
-    }
-} while (noEsNumero);
+// Lee JSON e imprime en consola
+const lista = document.querySelector("#listado");
+fetch('/js/pacientes.json')
+    .then((resp) => resp.json())
+    .then((data) => {
+        data.forEach(pac => {
+            // console.log(pac.nombre);
+            const li = document.createElement('li')
+            li.innerHTML = `
+                <h4>${pac.nombre}</h4>
+                <p class="text-success">${pac.edad}</p>
+                <p>Diagnóstico: ${pac.diagnostico}</p>
+                <hr/>
+            `
+            lista.append(li)
+        });
+    })
+
+// Lee del local Storage
+let cantidadCamas = localStorage.getItem('camas');
+if(cantidadCamas==null){
+    //Verifica que se ingrese un numero
+    do {
+        cantidadCamas = parseInt(prompt('Ingrese la cantidad de camas disponibles'));
+        if(!isNaN(cantidadCamas)){
+            noEsNumero = false;
+            localStorage.setItem('camas', cantidadCamas);
+        }
+    } while (noEsNumero);
+}
+
 let camaDisponible = cantidadCamas;
 document.write(`La cantidad de camas disponibles es: ${camaDisponible}<br>`);
 console.log(`La cantidad de camas disponibles es: ${camaDisponible}`);

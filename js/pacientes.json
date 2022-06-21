@@ -1,0 +1,21 @@
+[{
+    "nombre": "Javier",
+    "edad": 49,
+    "sala": "1",
+    "cama": "4",
+    "diagnostico": "Asma"
+},
+{
+    "nombre": "Claudio",
+    "edad": 47,
+    "sala": "2",
+    "cama": "3",
+    "diagnostico": "Litiasis renal"
+},
+{
+    "nombre": "Santino",
+    "edad": 13,
+    "sala": "6",
+    "cama": "5",
+    "diagnostico": "Algo"
+}]

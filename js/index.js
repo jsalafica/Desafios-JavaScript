@@ -1,3 +1,4 @@
+// Declaro variables
 //let cantidadCamas = 0;
 let noEsNumero = true;
 let nombre = '';
@@ -16,6 +17,31 @@ const restaCama = (a) => a-1;
 const camasLibres = (a,b) => a-b;
 const porcentajeCamaLibre = (a,b) => (b*100)/a;
 
+//Valida Usuarios
+const usuarios = [
+    {
+        nombreUsuario:"user",
+        password:"1234"
+    }
+];
+let ingresoUsuario = "";
+let ingresoPassword = "";
+let usuarioCorrecto = false;
+do {
+    if (ingresoUsuario=="" || ingresoPassword==""){
+    } else {
+        alert("Usuario incorrecto");
+    }
+    ingresoUsuario = prompt("Ingrese el nombre de usuario");
+    ingresoPassword = prompt("Ingrese su contraseña");
+    for (const usuario of usuarios){
+        console.log(usuario.nombreUsuario);
+        if(ingresoUsuario==usuario.nombreUsuario && ingresoPassword==usuario.password){
+            usuarioCorrecto = true;
+        }
+    }
+} while (!usuarioCorrecto);
+
 // Lee JSON e imprime en consola
 const lista = document.querySelector("#listado");
 fetch('/js/pacientes.json')
@@ -23,16 +49,32 @@ fetch('/js/pacientes.json')
     .then((data) => {
         data.forEach(pac => {
             // console.log(pac.nombre);
-            const li = document.createElement('li')
-            li.innerHTML = `
-                <h4>${pac.nombre}</h4>
-                <p class="text-success">${pac.edad}</p>
-                <p>Diagnóstico: ${pac.diagnostico}</p>
-                <hr/>
+            // const li = document.createElement('li');
+            // li.innerHTML = `
+            //     <h4>${pac.nombre}</h4>
+            //     <p class="text-success">${pac.edad}</p>
+            //     <p>Diagnóstico: ${pac.diagnostico}</p>
+            //     <hr/>
+            // `
+            // lista.append(li);
+            const div = document.createElement('div');
+            div.className = "card m-2";
+            div.innerHTML = `
+                <div class="card-body">
+                    <div class="card-title text-primary">
+                        Nombre: ${pac.nombre}
+                    </div>
+                    <div class="card-text">
+                        Edad: ${pac.edad}<br>
+                        Sala: ${pac.sala}<br>
+                        Cama: ${pac.cama}<br>
+                        Diagnóstico: ${pac.diagnostico}
+                    </div>
+                </div>
             `
-            lista.append(li)
+            lista.append(div);
         });
-    })
+    });
 
 // Lee del local Storage
 let cantidadCamas = localStorage.getItem('camas');
@@ -68,8 +110,7 @@ class Paciente {
         // document.write(`Cama: ${this.cama}<br>`);
         // document.write(`Diagnóstico: ${this.diagnostico}<br>`);
 
-        let tarjeta = document.getElementById('cardPaciente');
-        let card = document.createElement('div');
+        const card = document.createElement('div');
         card.className = "card m-2";
         card.innerHTML = `<div class="card-header">
                             Paciente
@@ -87,11 +128,11 @@ class Paciente {
                             </div>`;
         tarjeta.appendChild(card);
         
-        console.log(`Nombre: ${this.nombre}`);
-        console.log(`Edad: ${this.edad} años`);
-        console.log(`Sala: ${this.sala}`);
-        console.log(`Cama: ${this.cama}`);
-        console.log(`Diagnóstico: ${this.diagnostico}`);
+        // console.log(`Nombre: ${this.nombre}`);
+        // console.log(`Edad: ${this.edad} años`);
+        // console.log(`Sala: ${this.sala}`);
+        // console.log(`Cama: ${this.cama}`);
+        // console.log(`Diagnóstico: ${this.diagnostico}`);
     }
 }
 
@@ -129,7 +170,7 @@ do {
     }
 } while (nombre!='FIN');
 
-//Imprime resultados en pantalla y consola
+// Imprime resultados en pantalla y consola
 if (camaOcupada==1){
     document.write(`Se ocupó ${camaOcupada} cama<br>`);
     console.log(`Se ocupó ${camaOcupada} cama`);
@@ -149,7 +190,7 @@ let porcentajeCama = porcentajeCamaLibre(cantidadCamas,camaOcupada);
 let camasLibresFunc = camasLibres(cantidadCamas,camaOcupada);
 let edadPromedio = promedioEdad(sumaEdad,camaOcupada);
 
-//Imprime resultados de funciones
+// Imprime resultados de funciones
 document.write(`<br>La cantidad de camas libres calculada por función es: ${camasLibresFunc}`);
 document.write(`<br>La ocupación de camas es del: ${porcentajeCama.toFixed(2)}%`);
 document.write(`<br>El porcentaje de camas libres es del: ${100-porcentajeCama.toFixed(2)}%`);
@@ -159,8 +200,16 @@ console.log(`La ocupación de camas es del: ${porcentajeCama.toFixed(2)}%`);
 console.log(`El porcentaje de camas libres es del: ${100-porcentajeCama.toFixed(2)}%`);
 console.log(`La edad promedio de los internados es de ${edadPromedio.toFixed(2)} años.`);
 
-//Imprimo array
+// Guardo en localstorage
+localStorage.setItem("pacientes", JSON.stringify(pacientes));
+
+// Imprimo array
 // document.write(`<br><br>**<ins>Lista de internados</ins>**<br>`);
+const tarjeta = document.getElementById("cardPaciente");
 for(const paciente of pacientes){
     paciente.imprimir();
 }
+
+// Lee localstorage
+let guardado = localStorage.getItem("pacientes");
+console.log('Pacientes: ', JSON.parse(guardado));

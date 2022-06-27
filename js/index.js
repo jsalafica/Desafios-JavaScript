@@ -1,11 +1,13 @@
 let cantidadCamas = 0;
 let noEsNumero = true;
-let paciente = '';
+let nombre = '';
 let edad = 0;
 let sumaEdad = 0;
 let sala = '';
 let cama = '';
+let diagnostico = '';
 let camaOcupada = 0;
+let pacientes = [];
 
 //Funciones.
 const promedioEdad = (a,b) => a/b;
@@ -13,6 +15,31 @@ const sumaCama = (a) => a+1;
 const restaCama = (a) => a-1;
 const camasLibres = (a,b) => a-b;
 const porcentajeCamaLibre = (a,b) => (b*100)/a;
+
+//Clase paciente
+class Paciente {
+    constructor (nombre,edad,sala,cama,diagnostico){
+        this.nombre = nombre,
+        this.edad = edad,
+        this.sala = sala,
+        this.cama = cama,
+        this.diagnostico = diagnostico
+    }
+    imprimir(){
+        document.write(`------------------------<br>
+        Nombre: ${this.nombre}<br>
+        Edad: ${this.edad} años<br>
+        Sala: ${this.sala}<br>
+        Cama: ${this.cama}<br>
+        Diagnóstico: ${this.diagnostico}<br>`);        
+        
+        console.log(`Nombre: ${this.nombre}
+        Edad: ${this.edad} años
+        Sala: ${this.sala}
+        Cama: ${this.cama}
+        Diagnóstico: ${this.diagnostico}`);
+    }
+}
 
 //Verifica que se ingrese un numero
 do {
@@ -27,8 +54,8 @@ console.log(`La cantidad de camas disponibles es: ${camaDisponible}`);
 
 //Bucle de carga de pacientes
 do {
-    paciente = prompt('Ingrese el nombre del paciente: (Escriba Fin para terminar)').toUpperCase();
-    if(paciente=="FIN"){
+    nombre = prompt('Ingrese el nombre del paciente: (Escriba Fin para terminar)').toUpperCase();
+    if(nombre=="FIN"){
         break;
     }
 
@@ -43,16 +70,21 @@ do {
     sumaEdad+=edad;
     sala = prompt('Ingrese la sala: (ej: sala 1)');
     cama = prompt('Ingrese el número de la cama');
-    document.write(`El paciente ${paciente}, de ${edad} años de edad, se internó en ${sala} cama ${cama} <br>`);
-    console.log(`El paciente ${paciente}, de ${edad} años de edad, se internó en ${sala} cama ${cama}`);
+    diagnostico = prompt('Ingrese el diagnóstico');
+    document.write(`El paciente ${nombre}, de ${edad} años de edad, se internó en sala: ${sala} cama ${cama} con el diagnóstico de ${diagnostico}.<br>`);
+    console.log(`El paciente ${nombre}, de ${edad} años de edad, se internó en sala: ${sala} cama ${cama} con el diagnostico de ${diagnostico}.`);
     camaOcupada = sumaCama(camaOcupada);
     camaDisponible = restaCama(camaDisponible);
     console.log(`Suma edad: ${sumaEdad}`);
+
+    //Agrego a array
+    pacientes.push(new Paciente(nombre,edad,sala,cama,diagnostico));
+
     if(camaDisponible==0){
         alert('No hay mas camas libres');
         break;
     }
-} while (paciente!='FIN');
+} while (nombre!='FIN');
 
 //Imprime resultados en pantalla y consola
 if (camaOcupada==1){
@@ -83,3 +115,10 @@ console.log(`La cantidad de camas libres calculada por función es: ${camasLibre
 console.log(`La ocupación de camas es del: ${porcentajeCama.toFixed(2)}%`);
 console.log(`El porcentaje de camas libres es del: ${100-porcentajeCama.toFixed(2)}%`);
 console.log(`La edad promedio de los internados es de ${edadPromedio} años.`);
+
+
+// Imprimo array
+document.write(`<br><br>**<ins>Lista de internados</ins>**<br>`);
+for(const paciente of pacientes){
+    paciente.imprimir();
+}

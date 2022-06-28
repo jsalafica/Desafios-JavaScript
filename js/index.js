@@ -9,13 +9,6 @@ let diagnostico = '';
 let camaOcupada = 0;
 let pacientes = [];
 
-//Funciones.
-const promedioEdad = (a,b) => a/b;
-const sumaCama = (a) => a+1;
-const restaCama = (a) => a-1;
-const camasLibres = (a,b) => a-b;
-const porcentajeCamaLibre = (a,b) => (b*100)/a;
-
 //Clase paciente
 class Paciente {
     constructor (nombre,edad,sala,cama,diagnostico){
@@ -41,7 +34,21 @@ class Paciente {
     }
 }
 
-//Verifica que se ingrese un numero
+//Funciones.
+const promedioEdad = (a,b) => a/b;
+const sumaCama = (a) => a+1;
+const restaCama = (a) => a-1;
+const camasLibres = (a,b) => a-b;
+const porcentajeCamaLibre = (a,b) => (b*100)/a;
+function imprimirPacientes(){
+    pacientes.forEach((paci) => console.log(`${paci.nombre} - ${paci.edad} años - ${paci.diagnostico}`));
+    pacientes.forEach((paci) => paci.imprimir());
+}
+
+
+/// Ingreso de datos ///
+
+// Verifica que se ingrese un numero
 do {
     cantidadCamas = parseInt(prompt('Ingrese la cantidad de camas disponibles'));
     if(!isNaN(cantidadCamas)){
@@ -114,11 +121,29 @@ document.write(`<br>La edad promedio de los internados es de ${edadPromedio} añ
 console.log(`La cantidad de camas libres calculada por función es: ${camasLibresFunc}`);
 console.log(`La ocupación de camas es del: ${porcentajeCama.toFixed(2)}%`);
 console.log(`El porcentaje de camas libres es del: ${100-porcentajeCama.toFixed(2)}%`);
-console.log(`La edad promedio de los internados es de ${edadPromedio} años.`);
+console.log(`La edad promedio de los internados es de ${edadPromedio.toFixed(2)} años.`);
 
 
 // Imprimo array
 document.write(`<br><br>**<ins>Lista de internados</ins>**<br>`);
-for(const paciente of pacientes){
-    paciente.imprimir();
-}
+// for(const paciente of pacientes){
+//     paciente.imprimir();
+// }
+imprimirPacientes();
+
+// Suma las edades de los pacientes internados
+const totalEdad = pacientes.reduce((acu, pac) => acu + pac.edad , 0);
+console.log(`Suma de edades por funcion orden superior: ${totalEdad} años`);
+
+// Ordena pacientes por edad de menor a mayor
+pacientes.sort((a, b) => a.edad - b.edad);
+console.log(pacientes);
+// for (let paciente of pacientes){
+//     paciente.imprimir();
+// }
+document.write(`<br><br>**<ins>Lista de internados ordenados por edad de menor a mayor</ins>**<br>`)
+imprimirPacientes();
+
+// FOREACH
+// pacientes.forEach((paci) => console.log(`${paci.nombre} - ${paci.edad} años - ${paci.diagnostico}`));
+// pacientes.forEach((paci) => paci.imprimir());
